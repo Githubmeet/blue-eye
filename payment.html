@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .payment-page-container {
+            /* margin-bottom: 20px; */
+            /* max-width: 90% !important; */
+            margin: 0 20px 20px;
+            background-color: #f8f9fa;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #6c757d;
+        }
+
+        .payment-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 30px;
+        }
+
+        .payment-methods-container,
+        .order-summary-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-methods-container h2,
+        .order-summary-container h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 16px;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 12px 16px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .payment-method label {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .payment-method label i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .order-summary {
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .order-item {
+            display: flex;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .order-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-right: 16px;
+        }
+
+        .item-details h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .item-details p {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 8px;
+        }
+
+        .item-details .price {
+            font-size: 18px;
+            font-weight: 600;
+            color: #343a40;
+        }
+
+        .order-totals {
+            padding: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            font-weight: 500;
+            color: #343a40;
+            margin-bottom: 10px;
+        }
+
+        .order-total.total-payable {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .payment-actions-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .payment-info h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .payment-info p {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        .payment-logos img {
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .text-primary {
+            color: #007bff;
+        }
+
+        /* Add these styles to your existing CSS */
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .payment-container {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .payment-methods {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        /* Custom Radio Buttons */
+        input[type="radio"] {
+            display: none;
+            /* Hide the default radio button */
+        }
+
+        .payment-method label {
+            position: relative;
+            padding-left: 30px;
+            /* Space for custom radio button */
+            cursor: pointer;
+        }
+
+        .payment-method label::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 1px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #007bff;
+            /* Color for selected state */
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        input[type="radio"]:checked+label::before {
+            background-color: #007bff;
+            /* Color when selected */
+        }
+
+        /* Button Styles */
+        .btn {
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            /* Change border color on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">EYEWEAR</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">login</a>
+                    </li>
+                </ul>
+                <!-- <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+            </div>
+        </div>
+    </nav>
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+        <h1 class="display-4">Payment</h1>
+        <p class="lead">make your payment here</p>
+
+        <!-- <p class="lead" id="welcomeMessage" style="display: none;">Welcome, User!</p> -->
+    </div>
+
+
+    <div class="payment-page-container" style="margin: 20px;">
+        <!-- <div class="header">
+            <h1>Secure Checkout</h1>
+            <p>Complete your purchase in a few simple steps.</p>
+        </div> -->
+
+        <div class="payment-container">
+            <div class="payment-methods-container">
+                <h2>Select Payment Method</h2>
+                <div class="payment-methods">
+
+                    <div class="payment-method">
+                        <input type="radio" id="upi-qr-codes" name="payment-method">
+                        <label for="upi-qr-codes">
+                            <i class="fas fa-qrcode text-info"></i>
+                            UPI QR Codes
+                        </label>
+                    </div>
+                    <div class="payment-method">
+                        <input type="radio" id="google-pay" name="payment-method">
+                        <label for="google-pay">
+                            <i class="fab fa-google-pay text-warning"></i>
+                            Google Pay
+                        </label>
+                    </div>
+                    <div class="payment-method">
+                        <input type="radio" id="paytm" name="payment-method">
+                        <label for="paytm">
+                            <i class="fab fa-cc-paypal text-primary"></i>
+                            Paytm
+                        </label>
+                    </div>
+                    <div class="payment-method">
+                        <input type="radio" id="cash-on-delivery" name="payment-method">
+                        <label for="cash-on-delivery">
+                            <i class="fas fa-money-bill-alt text-success"></i>
+                            Cash On Delivery
+                        </label>
+                    </div>
+                    <div class="payment-method">
+                        <input type="radio" id="store-credit" name="payment-method">
+                        <label for="store-credit">
+                            <i class="fas fa-store text-info"></i>
+                            Store Credit
+                        </label>
+                    </div>
+                    <div class="payment-method">
+                        <input type="radio" id="net-banking" name="payment-method">
+                        <label for="net-banking">
+                            <i class="fas fa-university text-warning"></i>
+                            Net Banking
+                        </label>
+                    </div>
+                    <div class="payment-method">
+                        <input type="radio" id="bhim-upi" name="payment-method">
+                        <label for="bhim-upi">
+                            <i class="fab fa-cc-visa text-primary"></i>
+                            BHIM UPI / Phone Pe
+                        </label>
+                    </div>
+                    <div class="payment-method">
+                        <input type="radio" id="credit-debit-card" name="payment-method">
+                        <label for="credit-debit-card">
+                            <i class="fas fa-credit-card text-success"></i>
+                            Credit/Debit Card
+                        </label>
+                        <a href="thank.html">
+                        <button class="btn btn-primary btn-block mt-3">Proceed to Checkout</button></a>
+              
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="order-summary-container">
+                <h2>Order Summary</h2>
+                <div class="order-summary">
+                    <div class="order-item">
+                        <img src="p1.webp" alt="Product Image">
+                        <div class="item-details">
+                            <h3>Product Name</h3>
+                            <p>Product description goes here.</p>
+                            <span class="price">₹1499</span>
+                        </div>
+                    </div>
+                    <div class="order-totals">
+                        <div class="order-total">
+                            <span>Subtotal</span>
+                            <span>₹1499</span>
+                        </div>
+                        <div class="order-total">
+                            <span>Shipping</span>
+                            <span>₹100</span>
+                        </div>
+                        <div class="order-total">
+                            <span>Taxes</span>
+                            <span>₹51</span>
+                        </div>
+                        <div class="order-total total-payable">
+                            <span>Total Payable</span>
+                            <span>₹1650</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment-actions-container">
+                    <a href="thank.html">
+                    <button class="btn btn-primary">Place Order</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                
+            </div>
+            
+            <p class="text-center">&copy; 2024 EYEWEAR. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

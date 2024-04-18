@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add to Cart</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+  <link rel="stylesheet" href="pay.css">
+  <!-- <link rel="stylesheet" href="cart.css"> -->
+  <style>
+    /* Cart Table Styles */
+    .cart-product-image {
+      max-width: 80px;
+      height: auto;
+    }
+
+    .table.table-hover tbody tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    .table td {
+      vertical-align: middle;
+    }
+
+    /* Quantity Input Styles */
+    .cart-quantity {
+      max-width: 80px;
+      text-align: center;
+    }
+
+    /* Order Summary Card Styles */
+    .card {
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .table.table-bordered {
+      border-color: #dee2e6;
+    }
+
+    .table.table-bordered th,
+    .table.table-bordered td {
+    background-color: white;
+      border-color: #dee2e6;
+    }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 767px) {
+      .table-container {
+        overflow-x: auto;
+      }
+
+      .table {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Eyewear Store</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Shop</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="jumbotron">
+      <h1 class="display-4">Your Cart</h1>
+      <p class="lead">make your payment here</p>
+
+      <!-- <p class="lead" id="welcomeMessage" style="display: none;">Welcome, User!</p> -->
+  </div>
+
+    <div class="container my-5">
+      <h2 class="mb-4">Your Cart</h2>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="table-container">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="cartTable">
+                <!-- Cart items will be dynamically added here -->
+              </tbody>
+            </table>
+          </div>
+          <div id="emptyCartMessage" class="alert alert-info d-none" role="alert">
+            Your cart is empty.
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Order Summary</h5><hr>
+              <h6>Add Your Prescription</h6><br>
+              <input type="file" name="image" accept="image/*">
+              <hr>
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td>Subtotal:</td>
+                    <td id="subtotal">₹0.00</td>
+                  </tr>
+                  <tr>
+                    <td>Shipping:</td>
+                    <td>₹5.00</td>
+                  </tr>
+                  <tr>
+                    <td>Tax:</td>
+                    <td id="tax">₹0.00</td>
+                  </tr>
+                  <tr>
+                    <td>Total:</td>
+                    <td id="total">₹5.00</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0">Estimated Delivery:</p>
+                <p class="mb-0">3-5 business days</p>
+              </div>
+              <button id="proceedToShippingBtn" class="btn btn-primary btn-block mt-3">Proceed to Shipping</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+        <div class="row">
+          </div>
+        <p class="text-center">&copy; 2024 EYEWEAR. All rights reserved.</p>
+    </div>
+</footer>
+
+  <script>
+    // Sample product data
+const sampleProducts = [
+  {
+    name: 'Aviator',
+    price: 49.99,
+    image: 'p1.webp',
+    quantity: 1
+  },
+  {
+    name: 'Wayfarer',
+    price: 39.99,
+    image: 'p2.webp',
+    quantity: 2
+  },
+];
+
+// Render the cart table
+renderCartTable();
+
+function renderCartTable() {
+  let cartTable = document.getElementById('cartTable');
+  cartTable.innerHTML = '';
+
+  let subtotal = 0;
+  sampleProducts.forEach((item, index) => {
+    let row = document.createElement('tr');
+    row.innerHTML = `
+      <td>
+        <div class="d-flex align-items-center">
+          <img src="${item.image}" alt="${item.name}" class="cart-product-image mr-2">
+          <span>${item.name}</span>
+        </div>
+      </td>
+      <td>₹${item.price.toFixed(2)}</td>
+      <td>
+        <input type="number" class="form-control cart-quantity" value="${item.quantity}" min="1" onchange="updateCartQuantity(${index}, this.value)">
+      </td>
+      <td>₹${(item.price * item.quantity).toFixed(2)}</td>
+      <td><button class="btn btn-primary" onclick="removeItem(${index})">Delete</button></td>
+    `;
+    cartTable.appendChild(row);
+
+    subtotal += item.price * item.quantity;
+  });
+
+  updateTotals(subtotal);
+  // Show or hide empty cart message
+  document.getElementById('emptyCartMessage').classList.toggle('d-none', sampleProducts.length > 0);
+}
+
+function updateCartQuantity(index, quantity) {
+  sampleProducts[index].quantity = parseInt(quantity);
+  renderCartTable();
+}
+
+function removeItem(index) {
+  sampleProducts.splice(index, 1);
+  // Show visual feedback for item removal (optional)
+  renderCartTable();
+}
+
+function updateTotals(subtotal) {
+  let tax = subtotal * 0.1; // 10% tax
+  let total = subtotal + 5 + tax; // Shipping + Tax
+
+  document.getElementById('subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+  document.getElementById('tax').textContent = `₹${tax.toFixed(2)}`;
+  document.getElementById('total').textContent = `₹${total.toFixed(2)}`;
+}
+
+    // Render the cart table
+    renderCartTable();
+
+    // Add event listener to proceed to shipping button
+    document.getElementById('proceedToShippingBtn').addEventListener('click', function() {
+      // Store cart data in session storage
+      sessionStorage.setItem('cart', JSON.stringify(sampleProducts));
+
+      // Redirect to shipping page
+      window.location.href = 'shipping.html';
+    });
+
+  </script>
+</body>
+</html>

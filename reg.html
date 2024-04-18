@@ -1,0 +1,171 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eyewear - Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        } */
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 7.2px  8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Eyewear</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin_dashboard.html">admin</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="products.html">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="add-to-cart.html">Cart</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" id="loginLink" style="display: none;" href="reg.html">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="logoutLink" href="#" onclick="logout()" style="display: none;">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Form -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Registration Form</h2>
+                        <form id="registrationForm" onsubmit="return validateForm()">
+                          <label for="username">Username:</label>
+                          <input type="text" id="username" name="username">
+                    
+                          <label for="password">Password:</label>
+                          <input type="password" id="password" name="password">
+                    
+                          <label for="confirmPassword">Confirm Password:</label>
+                          <input type="password" id="confirmPassword" name="confirmPassword">
+                    
+                          <input type="submit" value="Register">
+                          <button type="button" class="btn btn-primary" onclick="login()">Login</button>
+
+                        </form>
+                        <div id="errorMessages"></div>
+                      </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        function validateForm() {
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+          const confirmPassword = document.getElementById('confirmPassword').value;
+          const errorMessages = document.getElementById('errorMessages');
+          errorMessages.innerHTML = '';
+    
+          if (!username.trim()) {
+            errorMessages.innerHTML += '<p class="error">Please enter a username.</p>';
+          }
+    
+          if (!password.trim()) {
+            errorMessages.innerHTML += '<p class="error">Please enter a password.</p>';
+          }
+    
+          if (password !== confirmPassword) {
+            errorMessages.innerHTML += '<p class="error">Passwords do not match.</p>';
+          }
+    
+          if (errorMessages.innerHTML !== '') {
+            return false; // Prevent form submission
+          }
+    
+          // Send registration data to server (not implemented here)
+          sendRegistrationData(username, password);
+    
+          // Save registration data to admin panel (localStorage for demo)
+          saveToAdminPanel({ username, password });
+    
+          return true; // Allow form submission
+        }
+    
+        function sendRegistrationData(username, password) {
+          // Send data to server using fetch() or XMLHttpRequest
+          // Example: fetch('/register', { method: 'POST', body: JSON.stringify({ username, password }) });
+          console.log('Sending data to server:', username, password);
+        }
+    
+        function saveToAdminPanel(userData) {
+          // Save data to admin panel (localStorage for demo)
+          let adminData = JSON.parse(localStorage.getItem('adminData')) || [];
+          adminData.push(userData);
+          localStorage.setItem('adminData', JSON.stringify(adminData));
+          console.log('Saved to admin panel:', userData);
+        }
+      </script>
+    </body>
+    </html>
+    

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Management - EYEWEAR</title>
+    <link rel="stylesheet" href="admin_style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Customer Management - EYEWEAR</h1>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <ul>
+          <li><a href="admin_dashboard.html">Dashboard</a></li>
+          <li><a href="admin_product.html">Products</a></li>
+          <!-- <li><a href="admin_order.html">Orders</a></li> -->
+          <li><a href="admin_customer.html">Customers</a></li>
+          <!-- <li><a href="admin_inventory.html">inventory</a></li> -->
+          <!-- <li><a href="admin_analysis.html">Analytics</a></li> -->
+          <!-- <li><a href="admin_regist.html">Registration</a></li> -->
+          <!-- <li><a href="#">Settings</a></li> -->
+          <li><a href="index.html">Logout</a></li>
+      </ul>
+  </div>
+  <div class="content">
+    <div class="container">
+        <h2>User Details</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Password</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userData">
+            <!-- User data will be dynamically added here -->
+          </tbody>
+        </table>
+      </div>
+    
+      <script>
+        let adminData = JSON.parse(localStorage.getItem('adminData')) || [];
+        const userDataTbody = document.getElementById('userData');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+    
+        function displayUserData() {
+          userDataTbody.innerHTML = ''; // Clear previous data
+          adminData.forEach(user => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${user.username}</td>
+              <td>${user.password}</td>
+              <td class="user-actions">
+                <button class="edit-btn" onclick="editUser('${user.username}')">Edit</button>
+                <button class="delete-btn" onclick="deleteUser('${user.username}')">Delete</button>
+              </td>`;
+            userDataTbody.appendChild(row);
+          });
+        }
+    
+        function addUser() {
+          const username = usernameInput.value.trim();
+          const password = passwordInput.value.trim();
+          if (username && password) {
+            adminData.push({ username, password });
+            localStorage.setItem('adminData', JSON.stringify(adminData));
+            usernameInput.value = '';
+            passwordInput.value = '';
+            displayUserData();
+          } else {
+            alert('Please enter valid username and password.');
+          }
+        }
+    
+        function editUser(username) {
+          const newPassword = prompt(`Enter new password for ${username}:`);
+          if (newPassword !== null) {
+            const userIndex = adminData.findIndex(user => user.username === username);
+            if (userIndex !== -1) {
+              adminData[userIndex].password = newPassword;
+              localStorage.setItem('adminData', JSON.stringify(adminData));
+              displayUserData();
+            }
+          }
+        }
+    
+        function deleteUser(username) {
+          const confirmDelete = confirm(`Are you sure you want to delete ${username}?`);
+          if (confirmDelete) {
+            adminData = adminData.filter(user => user.username !== username);
+            localStorage.setItem('adminData', JSON.stringify(adminData));
+            displayUserData();
+          }
+        }
+    
+        // Initial display of user data
+        displayUserData();
+      </script>
+    </body>
+    </html>
+    

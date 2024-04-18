@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Address & Billing Information</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <link rel="stylesheet" href="pay.css">
+    <style>
+        .cart-summary {
+    margin: 30px;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    align-items: center;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">EYEWEAR</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.html">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+        <h1 class="display-4">Shipping Address</h1>
+        <p class="lead">Manage the shipping Address</p>
+    </div>
+
+    <main>
+            <!-- Billing Information -->
+            <!-- <div class="col-md-6"> -->
+                <div class="cart-summary">
+                    <h2 class="mb-4">Shipping Address</h2>
+                    <div class="row">
+                      <div class="col-lg-8">
+                        <form id="shippingForm">
+                          <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                          </div>
+                          <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" placeholder="Enter your address">
+                          </div>
+                          <div class="form-row">
+                            <div class="form-group col-md-6">
+                              <label for="city">City</label>
+                              <input type="text" class="form-control" id="city" placeholder="Enter your city">
+                            </div>
+                            <div class="form-group col-md-4">
+                              <label for="state">State</label>
+                              <input type="text" class="form-control" id="state" placeholder="Enter your state">
+                            </div>
+                            <div class="form-group col-md-2">
+                              <label for="zip">Zip</label>
+                              <input type="text" class="form-control" id="zip" placeholder="Zip code">
+                            </div>
+                          </div>
+                        </form>
+                        <a href="payment.html">
+                        <button type="submit">Save and Continue</button></a>
+  
+                      </div>
+                      <!-- <div class="col-lg-4">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">Order Summary</h5>
+                            <table class="table table-bordered">
+                              <tbody>
+                                <tr>
+                                  <td>Subtotal:</td>
+                                  <td id="subtotal">₹1499</td>
+                                </tr>
+                                <tr>
+                                  <td>Shipping:</td>
+                                  <td>₹5.00</td>
+                                </tr>
+                                <tr>
+                                  <td>Tax:</td>
+                                  <td id="tax">₹0.00</td>
+                                </tr>
+                                <tr>
+                                  <td>Total:</td>
+                                  <td id="total">₹1499</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+                </main>
+              
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                  </div>
+                <p class="text-center">&copy; 2024 EYEWEAR. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
